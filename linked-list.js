@@ -14,25 +14,19 @@ class LinkedList {
     this.head = null;
     this.tail = null;
     this.length = 0;
+    this.setNodes(vals)
+  }
 
-    // for (let val of vals) this.push(val);
+  setNodes(vals){
     let prevNode = null;
     vals.forEach( (v,idx)=>{
       let newNode = new Node(v)
-      // console.log(`adding value: ${v} @ idx: ${idx}`)
+      
       if (idx===0) { this.head = newNode }
-      // console.log(`case: idx=0`)
-      
       if (idx===vals.length-1) { this.tail = newNode }
-        // console.log(`case: last idx`);
-
       if (prevNode) { prevNode.next = newNode }
-        // console.log(
-        //   `prevNode: ${prevNode.val}, ${prevNode.next}; currNode: ${newNode.val}, ${newNode.next}`
-        // );
-      prevNode = newNode;
 
-      
+      prevNode = newNode;
       this.length += 1;
     });
   }
@@ -42,11 +36,9 @@ class LinkedList {
   push(val) {
     const newNode = new Node(val);
     if (this.head===null) {
-      this.head = newNode;
-      this.tail = newNode;
+      this.head = this.tail = newNode;
     } else {
-      this.tail.next = newNode;
-      this.tail = newNode;
+      this.tail.next = this.tail = newNode;
     }
     this.length += 1;
   }
@@ -73,7 +65,7 @@ class LinkedList {
         this.tail = currentNode;
         currentNode.next = null;
       } else if (currentNode === this.tail){
-        [ this.tail, this.head ] = [ null, null ];
+        this.tail = this.head = null;
       }
       currentNode = currentNode.next;
     }
@@ -86,10 +78,9 @@ class LinkedList {
   shift() {
     let currentNode = this.head;
     if (currentNode && currentNode.next){
-      this.head = currentNode.next
+      this.head = currentNode.next;
     } else if (currentNode){
-      this.head = null;
-      this.tail = null;
+      this.head = this.tail = null;
     }
     this.length -= 1;
     return currentNode.val;
@@ -150,7 +141,7 @@ class LinkedList {
     for (let i=0; i<=idx; i++) {
       if (i===idx){
         if (this.length===1) {
-          [this.head, this.tail] = [null, null];
+          this.head = this.tail = null;
         } else {
           previousNode.next = currentNode.next;
         }
